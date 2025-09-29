@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echo-server-2
+  annotations:
+    mia-platform.eu/version: 14.2.1
+    apparmor.security.beta.kubernetes.io/allowedProfileNames: runtime/default
+    apparmor.security.beta.kubernetes.io/defaultProfileName: runtime/default
+    fluentbit.io/parser: pino
+  labels:
+    app: echo-server-2
+    app.kubernetes.io/name: echo-server-2
+    app.kubernetes.io/version: latest
+    app.kubernetes.io/component: custom
+    app.kubernetes.io/part-of: frengo-ale-github
+    app.kubernetes.io/managed-by: mia-platform
+    mia-platform.eu/stage: DEV
+    mia-platform.eu/tenant: 6b38a8ec-816c-487c-986d-c59edb294ea6
+    mia-platform.eu/log-type: mia-json
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: echo-server-2
+  strategy:
+    type: RollingUpdate
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      annotations:
+        apparmor.security.beta.kubernetes.io/allowedProfileNames: runtime/default
+        apparmor.security.beta.kubernetes.io/defaultProfileName: runtime/default
+        fluentbit.io/parser: pino
+      labels:
+        app: echo-server-2
+        app.kubernetes.io/name: echo-server-2
+        app.kubernetes.io/version: latest
+        app.kubernetes.io/component: custom
+        app.kubernetes.io/part-of: frengo-ale-github
+        app.kubernetes.io/managed-by: mia-platform
+        mia-platform.eu/stage: DEV
+        mia-platform.eu/tenant: 6b38a8ec-816c-487c-986d-c59edb294ea6
+        mia-platform.eu/log-type: mia-json
+    spec:
+      imagePullSecrets:
+        - name: nexus-gcloud
+      terminationGracePeriodSeconds: 30
+      serviceAccountName: echo-server-2
+      containers:
+        - name: echo-server-2
+          image: ealen/echo-server
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: 150Mi
+              cpu: 100m
+            requests:
+              memory: 150Mi
+              cpu: 100m
+          volumeMounts: []
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          args: []
+          env:
+            - name: HTTP_PORT
+              value: '3000'
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+      volumes: []
+      hostIPC: false
+      hostNetwork: false
+      hostPID: false
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
