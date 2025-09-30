@@ -3,12 +3,16 @@ kind: Kustomization
 resources:
   - ../../configuration
   - api-gateway-envoy-config.configmap.yml
+  - authorization-service-config.configmap.yml
   - api-gateway.deployment.yml
   - api-gateway.service.yml
   - echo-server.deployment.yml
   - echo-server.service.yml
   - echo-server-2.deployment.yml
   - echo-server-2.service.yml
+  - authorization-service.deployment.yml
+  - authorization-service.service.yml
   - api-gateway.serviceaccount.yml
   - echo-server.serviceaccount.yml
   - echo-server-2.serviceaccount.yml
+  - authorization-service.serviceaccount.yml
