@@ -1,5 +1,5 @@
 name: Deploy Workflow
-on: deployment
+on: workflow_dispatch
 jobs:
   deploy-ENVIRONMENT_NAME:
     name: Deploy to ENVIRONMENT_NAME environment
